@@ -98,6 +98,10 @@
           currentItem.element = document.querySelector(currentItem.element);
         }
 
+        if (currentItem.element instanceof SVGElement) {
+          _makeDummyElement.call(currentItem);
+        }
+
         //intro without element
         if (typeof(currentItem.element) === 'undefined' || currentItem.element == null) {
           var floatingElementQuery = document.querySelector(".introjsFloatingElement");
@@ -266,6 +270,34 @@
     }
     return false;
   }
+
+  /*
+   * makes a dummy div for SVG elements
+   * @api private
+   * @method _makeDummyElement
+  */
+
+  function _makeDummyElement() {
+    if (!this.element instanceof SVGElement) return false;
+
+    var svgClientRect = this.element.getBoundingClientRect(),
+      svgNode = this.element.cloneNode(true),
+      dummy = document.createElement('div');
+
+    dummy.className = 'dummyElement';
+
+    dummy.style.width = svgClientRect.width + 'px';
+    dummy.style.height = svgClientRect.height + 'px';
+    dummy.style.left = svgClientRect.left + 'px';
+    dummy.style.top = svgClientRect.top + 'px';
+
+    dummy.appendChild(svgNode);
+
+    document.body.appendChild(dummy);
+
+    this.element = dummy;
+  }
+
 
  /*
    * makes a copy of the object

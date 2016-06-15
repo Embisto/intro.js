@@ -292,6 +292,19 @@ tr.introjs-showElement > th {
   text-decoration: none;
 }
 
+.dummyElement {
+  visibility: hidden;
+  position: absolute;
+}
+
+.dummyElement > * {
+  position: absolute;
+}
+
+.dummyElement.introjs-showElement {
+  visibility: visible;
+}
+
 .introjs-bullets {
   text-align: center;
 }
